@@ -45,9 +45,9 @@ var GtkSchema = new mongoose_1.Schema({
     },
     nip: {
         type: String,
-        unique: true
+        // unique: true
     },
-    photo: {
+    image_url: {
         type: String,
         require: true
     },
