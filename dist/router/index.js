@@ -7,12 +7,12 @@ var express_1 = __importDefault(require("express"));
 var controllers_1 = __importDefault(require("../controllers"));
 var uploadFile_1 = __importDefault(require("../utils/uploadFile"));
 var router = express_1.default.Router();
-router.get('/', function (req, res) {
-    res.render('home', {
-        layout: 'layouts/main',
-        title: 'Home',
-    });
-});
+// router.get('/', (req: Request, res: Response) => {
+//   res.render('home', {
+//     layout: 'layouts/main',
+//     title: 'Home',
+//   });
+// })
 router.get('/api/v1/gtk', controllers_1.default.listGtk);
 router.get('/api/v1/gtk/:id', controllers_1.default.getGtkById);
 router.post('/api/v1/gtk', uploadFile_1.default, controllers_1.default.createGtk);
