@@ -80,8 +80,81 @@ var Gtk = /** @class */ (function () {
             }
         });
     }); };
+    Gtk.getGtkById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+        var gtkId, getGtk, response, error_2, response;
+        return __generator(_a, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    gtkId = req.params.id;
+                    _b.label = 1;
+                case 1:
+                    _b.trys.push([1, 3, , 4]);
+                    return [4 /*yield*/, gtk_2.default.getGtkById(gtkId)];
+                case 2:
+                    getGtk = _b.sent();
+                    response = {
+                        status: {
+                            code: 200,
+                            response: 'success',
+                            message: 'Gtk has found'
+                        },
+                        result: getGtk
+                    };
+                    res.status(200).json(response);
+                    return [3 /*break*/, 4];
+                case 3:
+                    error_2 = _b.sent();
+                    response = {
+                        status: {
+                            code: 404,
+                            response: 'fail',
+                            message: "".concat(error_2)
+                        }
+                    };
+                    res.status(404).json(response);
+                    return [3 /*break*/, 4];
+                case 4: return [2 /*return*/];
+            }
+        });
+    }); };
+    Gtk.deleteGtkById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+        var gtkId, response, error_3, response;
+        return __generator(_a, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    gtkId = req.params.id;
+                    _b.label = 1;
+                case 1:
+                    _b.trys.push([1, 3, , 4]);
+                    return [4 /*yield*/, gtk_2.default.deleteGtkById(gtkId)];
+                case 2:
+                    _b.sent();
+                    response = {
+                        status: {
+                            code: 200,
+                            response: 'success',
+                            message: "GTK with id: ".concat(gtkId, " has been deleted")
+                        }
+                    };
+                    res.status(200).json(response);
+                    return [3 /*break*/, 4];
+                case 3:
+                    error_3 = _b.sent();
+                    response = {
+                        status: {
+                            code: 400,
+                            response: 'fail',
+                            message: "".concat(error_3)
+                        }
+                    };
+                    res.status(400).json(response);
+                    return [3 /*break*/, 4];
+                case 4: return [2 /*return*/];
+            }
+        });
+    }); };
     Gtk.createGtk = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-        var payload, image, typeImage, newGtk, response, error_2, response;
+        var payload, image, typeImage, newGtk, response, error_4, response;
         var _b, _c;
         return __generator(_a, function (_d) {
             switch (_d.label) {
@@ -106,12 +179,12 @@ var Gtk = /** @class */ (function () {
                     res.status(201).json(response);
                     return [3 /*break*/, 4];
                 case 3:
-                    error_2 = _d.sent();
+                    error_4 = _d.sent();
                     response = {
                         status: {
                             code: 400,
                             response: 'fail',
-                            message: "".concat(error_2)
+                            message: "".concat(error_4)
                         }
                     };
                     res.status(400).json(response);
@@ -121,7 +194,7 @@ var Gtk = /** @class */ (function () {
         });
     }); };
     Gtk.updateGtk = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-        var payload, gtkId, image, typeImage, gtkUpdate, response, error_3, response;
+        var payload, gtkId, image, typeImage, gtkUpdate, response, error_5, response;
         var _b, _c;
         return __generator(_a, function (_d) {
             switch (_d.label) {
@@ -147,12 +220,12 @@ var Gtk = /** @class */ (function () {
                     res.status(200).json(response);
                     return [3 /*break*/, 4];
                 case 3:
-                    error_3 = _d.sent();
+                    error_5 = _d.sent();
                     response = {
                         status: {
                             code: 400,
                             response: 'fail',
-                            message: "".concat(error_3)
+                            message: "".concat(error_5)
                         }
                     };
                     res.status(400).json(response);

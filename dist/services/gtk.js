@@ -126,8 +126,42 @@ var GtkService = /** @class */ (function () {
             }
         });
     }); };
+    GtkService.getGtkById = function (gtkId) { return __awaiter(void 0, void 0, void 0, function () {
+        var getGtk, error_2;
+        return __generator(_a, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    _b.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, gtk_1.default.getGtkById(gtkId)];
+                case 1:
+                    getGtk = _b.sent();
+                    return [2 /*return*/, getGtk];
+                case 2:
+                    error_2 = _b.sent();
+                    throw new Error(error_2.message || 'Unknown error occurred!');
+                case 3: return [2 /*return*/];
+            }
+        });
+    }); };
+    GtkService.deleteGtkById = function (gtkId) { return __awaiter(void 0, void 0, void 0, function () {
+        var deleteGtk, error_3;
+        return __generator(_a, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    _b.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, gtk_1.default.deleteGtkById(gtkId)];
+                case 1:
+                    deleteGtk = _b.sent();
+                    return [2 /*return*/, deleteGtk];
+                case 2:
+                    error_3 = _b.sent();
+                    throw new Error(error_3.message || 'Unknown error occurred!');
+                case 3: return [2 /*return*/];
+            }
+        });
+    }); };
     GtkService.updateGtk = function (res, payload, gtkId, image, typeImage) { return __awaiter(void 0, void 0, void 0, function () {
-        var gtkUpdate, newImageUrl, error_2;
+        var gtkUpdate, newImageUrl, error_4;
         return __generator(_a, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -156,8 +190,8 @@ var GtkService = /** @class */ (function () {
                     _b.label = 5;
                 case 5: return [2 /*return*/, gtkUpdate];
                 case 6:
-                    error_2 = _b.sent();
-                    throw new Error(error_2.message || 'Unknown error occurred');
+                    error_4 = _b.sent();
+                    throw new Error(error_4.message || 'Unknown error occurred');
                 case 7: return [2 /*return*/];
             }
         });

@@ -110,6 +110,32 @@ var GtkRepository = /** @class */ (function () {
             });
         });
     };
+    GtkRepository.deleteGtkById = function (gtkId) {
+        return __awaiter(this, void 0, void 0, function () {
+            var gtkData;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        // Validasi format ID
+                        if (!mongoose_1.default.Types.ObjectId.isValid(gtkId)) {
+                            throw new Error("Invalid ID format: ".concat(gtkId));
+                        }
+                        ;
+                        return [4 /*yield*/, gtk_1.default.findById(gtkId)];
+                    case 1:
+                        gtkData = _a.sent();
+                        if (!gtkData) {
+                            throw new Error("GTK with Id ".concat(gtkId, " not found!"));
+                        }
+                        ;
+                        return [4 /*yield*/, gtk_1.default.findByIdAndDelete(gtkId)];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
     return GtkRepository;
 }());
 exports.default = GtkRepository;
