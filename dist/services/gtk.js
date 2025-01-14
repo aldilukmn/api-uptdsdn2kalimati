@@ -44,14 +44,14 @@ var gtk_1 = __importDefault(require("../repositories/gtk"));
 var GtkService = /** @class */ (function () {
     function GtkService() {
     }
-    GtkService.saveUpdate = function (options, gtkId, newImageUrl) {
+    GtkService.saveUpdate = function (options, gtkId, newImageUrl, newImageId) {
         return __awaiter(this, void 0, void 0, function () {
-            var status, name, nip, existingGtk, totalStudent, updateGtk;
+            var status, name, nip, class_gtk, existingGtk, totalStudent, updateGtk;
             var _b, _c;
             return __generator(this, function (_d) {
                 switch (_d.label) {
                     case 0:
-                        status = options.status, name = options.name, nip = options.nip;
+                        status = options.status, name = options.name, nip = options.nip, class_gtk = options.class_gtk;
                         return [4 /*yield*/, gtk_1.default.getGtkById(gtkId)];
                     case 1:
                         existingGtk = _d.sent();
@@ -63,7 +63,9 @@ var GtkService = /** @class */ (function () {
                             status: status || existingGtk.status,
                             name: name || existingGtk.name,
                             nip: nip || existingGtk.nip,
+                            class_gtk: class_gtk || existingGtk.class_gtk,
                             image_url: newImageUrl || existingGtk.image_url,
+                            image_id: newImageId || existingGtk.image_id,
                             totalStudent: totalStudent
                         };
                         return [4 /*yield*/, gtk_1.default.updateGtk(gtkId, updateGtk)];
@@ -83,11 +85,10 @@ var GtkService = /** @class */ (function () {
             switch (_d.label) {
                 case 0:
                     _d.trys.push([0, 3, , 4]);
-                    if (!payload.status || !payload.name || !payload.nip) {
+                    if (!payload.status || !payload.name) {
                         throw new Error("".concat(!payload.status ? 'status'
                             : !payload.name ? 'name'
-                                : !payload.nip ? 'nip'
-                                    : null, " is required!"));
+                                : null, " is required!"));
                     }
                     if (typeImage !== 'image/png' &&
                         typeImage !== 'image/jpg' &&
@@ -109,7 +110,9 @@ var GtkService = /** @class */ (function () {
                         status: payload.status.toLowerCase(),
                         name: payload.name,
                         nip: payload.nip === '-' ? '' : payload.nip,
+                        class_gtk: payload.class_gtk,
                         image_url: imageUrl.secure_url,
+                        image_id: imageUrl.public_id,
                         totalStudent: {
                             male: (_b = payload.totalStudent) === null || _b === void 0 ? void 0 : _b.male,
                             female: (_c = payload.totalStudent) === null || _c === void 0 ? void 0 : _c.female
@@ -180,7 +183,7 @@ var GtkService = /** @class */ (function () {
                         })];
                 case 1:
                     newImageUrl = _b.sent();
-                    return [4 /*yield*/, _a.saveUpdate(payload, gtkId, newImageUrl.secure_url)];
+                    return [4 /*yield*/, _a.saveUpdate(payload, gtkId, newImageUrl.secure_url, newImageUrl.public_id)];
                 case 2:
                     gtkUpdate = _b.sent();
                     return [3 /*break*/, 5];

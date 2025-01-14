@@ -47,7 +47,15 @@ var GtkSchema = new mongoose_1.Schema({
         type: String,
         // unique: true
     },
+    class_gtk: {
+        type: String,
+        require: false
+    },
     image_url: {
+        type: String,
+        require: true
+    },
+    image_id: {
         type: String,
         require: true
     },

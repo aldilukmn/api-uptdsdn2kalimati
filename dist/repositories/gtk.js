@@ -41,6 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = __importDefault(require("mongoose"));
 var gtk_1 = __importDefault(require("../models/gtk"));
+var cloudinary_1 = __importDefault(require("../config/cloudinary"));
 var GtkRepository = /** @class */ (function () {
     function GtkRepository() {
     }
@@ -110,6 +111,7 @@ var GtkRepository = /** @class */ (function () {
             });
         });
     };
+    // Delete GTK
     GtkRepository.deleteGtkById = function (gtkId) {
         return __awaiter(this, void 0, void 0, function () {
             var gtkData;
@@ -128,8 +130,15 @@ var GtkRepository = /** @class */ (function () {
                             throw new Error("GTK with Id ".concat(gtkId, " not found!"));
                         }
                         ;
-                        return [4 /*yield*/, gtk_1.default.findByIdAndDelete(gtkId)];
+                        if (!gtkData.image_id) return [3 /*break*/, 3];
+                        return [4 /*yield*/, cloudinary_1.default.uploader.destroy(gtkData.image_id)];
                     case 2:
+                        _a.sent();
+                        _a.label = 3;
+                    case 3:
+                        ;
+                        return [4 /*yield*/, gtk_1.default.findByIdAndDelete(gtkId)];
+                    case 4:
                         _a.sent();
                         return [2 /*return*/];
                 }
