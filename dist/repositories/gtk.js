@@ -40,7 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = __importDefault(require("mongoose"));
-var gtk_1 = __importDefault(require("../models/gtk"));
+var gtk_1 = __importDefault(require("../models/schema/gtk"));
 var cloudinary_1 = __importDefault(require("../config/cloudinary"));
 var GtkRepository = /** @class */ (function () {
     function GtkRepository() {
@@ -69,15 +69,13 @@ var GtkRepository = /** @class */ (function () {
     // Create New GTK
     GtkRepository.createGtk = function (data) {
         return __awaiter(this, void 0, void 0, function () {
-            var newGtk, savedGtk;
+            var newGtk;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         newGtk = new gtk_1.default(data);
                         return [4 /*yield*/, newGtk.save()];
-                    case 1:
-                        savedGtk = _a.sent();
-                        return [2 /*return*/, savedGtk];
+                    case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
