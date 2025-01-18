@@ -15,7 +15,9 @@ var router = express_1.default.Router();
 //   });
 // })
 // FOR ADMIN
+router.get('/api/v1/user/:id', user_1.default.getUserById);
 router.post('/api/v1/user', uploadFile_1.default, user_1.default.register);
+router.get('/api/v1/user', user_1.default.listUser);
 // GET GTK DATA
 router.get('/api/v1/gtk', gtk_1.default.listGtk);
 router.get('/api/v1/gtk/:id', gtk_1.default.getGtkById);

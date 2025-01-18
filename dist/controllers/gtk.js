@@ -71,7 +71,7 @@ var Gtk = /** @class */ (function () {
                         status: {
                             code: 400,
                             response: 'error',
-                            message: "asa".concat(error_1)
+                            message: error_1
                         }
                     };
                     res.status(400).json(response);
@@ -96,7 +96,7 @@ var Gtk = /** @class */ (function () {
                         status: {
                             code: 200,
                             response: 'success',
-                            message: 'Gtk has found'
+                            message: 'gtk has found.'
                         },
                         result: getGtk
                     };

@@ -39,6 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var mongoose_1 = __importDefault(require("mongoose"));
 var user_1 = __importDefault(require("../models/schema/user"));
 var UserRepository = /** @class */ (function () {
     function UserRepository() {
@@ -85,6 +86,29 @@ var UserRepository = /** @class */ (function () {
                         newUser = new user_1.default(user);
                         return [4 /*yield*/, newUser.save()];
                     case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    // Get User By Id
+    UserRepository.getUserById = function (userId) {
+        return __awaiter(this, void 0, void 0, function () {
+            var userData;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!mongoose_1.default.Types.ObjectId.isValid(userId)) {
+                            throw new Error("Invalid ID format: ".concat(userId));
+                        }
+                        ;
+                        return [4 /*yield*/, user_1.default.findById(userId)];
+                    case 1:
+                        userData = _a.sent();
+                        if (!userData) {
+                            throw new Error("User with id ".concat(userId, " not found!"));
+                        }
+                        ;
+                        return [2 /*return*/, userData];
                 }
             });
         });

@@ -48,7 +48,7 @@ var UserService = /** @class */ (function () {
     var _a;
     _a = UserService;
     UserService.register = function (payload, isImage, imageType) { return __awaiter(void 0, void 0, void 0, function () {
-        var username, password, email, role, imageUrl, getUsername, getUserEmail, salt, hasPass, newUser, error_1;
+        var username, password, email, role, getUsername, getUserEmail, imageUrl, salt, hasPass, newUser, error_1;
         return __generator(_a, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -73,6 +73,15 @@ var UserService = /** @class */ (function () {
                     if (!isImage) {
                         throw new Error('Image is undefined!');
                     }
+                    return [4 /*yield*/, user_1.default.getUserByUsername(username)];
+                case 2:
+                    getUsername = _b.sent();
+                    return [4 /*yield*/, user_1.default.getUserByEmail(email)];
+                case 3:
+                    getUserEmail = _b.sent();
+                    if (getUsername !== null && getUsername !== void 0 ? getUsername : getUserEmail) {
+                        throw new Error("".concat(getUsername ? 'username' : 'email', " already exist!"));
+                    }
                     return [4 /*yield*/, cloudinary_1.default.uploader.upload(isImage, {
                             folder: 'user'
                         }, function (err, result) {
@@ -81,23 +90,14 @@ var UserService = /** @class */ (function () {
                             }
                             return result;
                         })];
-                case 2:
-                    imageUrl = _b.sent();
-                    return [4 /*yield*/, user_1.default.getUserByUsername(username)];
-                case 3:
-                    getUsername = _b.sent();
-                    return [4 /*yield*/, user_1.default.getUserByEmail(email)];
                 case 4:
-                    getUserEmail = _b.sent();
+                    imageUrl = _b.sent();
                     return [4 /*yield*/, bcrypt_1.default.genSalt()];
                 case 5:
                     salt = _b.sent();
                     return [4 /*yield*/, bcrypt_1.default.hash(password, salt)];
                 case 6:
                     hasPass = _b.sent();
-                    if (getUsername !== null && getUsername !== void 0 ? getUsername : getUserEmail) {
-                        throw new Error("".concat(getUsername ? 'username' : 'email', " already exist!"));
-                    }
                     newUser = {
                         username: username.toLowerCase(),
                         password: hasPass,
@@ -114,6 +114,23 @@ var UserService = /** @class */ (function () {
                     error_1 = _b.sent();
                     throw error_1;
                 case 9: return [2 /*return*/];
+            }
+        });
+    }); };
+    UserService.getUserById = function (userId) { return __awaiter(void 0, void 0, void 0, function () {
+        var getUser, error_2;
+        return __generator(_a, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    _b.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, user_1.default.getUserById(userId)];
+                case 1:
+                    getUser = _b.sent();
+                    return [2 /*return*/, getUser];
+                case 2:
+                    error_2 = _b.sent();
+                    throw error_2;
+                case 3: return [2 /*return*/];
             }
         });
     }); };

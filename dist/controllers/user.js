@@ -40,13 +40,48 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var user_1 = __importDefault(require("../services/user"));
+var user_2 = __importDefault(require("../models/schema/user"));
 var User = /** @class */ (function () {
     function User() {
     }
     var _a;
     _a = User;
+    User.listUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+        var userData, response, error_1, response;
+        return __generator(_a, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    _b.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, user_2.default.find()];
+                case 1:
+                    userData = _b.sent();
+                    response = {
+                        status: {
+                            code: 200,
+                            response: 'success',
+                            message: 'user successfully retrieved.'
+                        },
+                        result: userData
+                    };
+                    res.status(200).json(response);
+                    return [3 /*break*/, 3];
+                case 2:
+                    error_1 = _b.sent();
+                    response = {
+                        status: {
+                            code: 400,
+                            response: 'error',
+                            message: error_1
+                        }
+                    };
+                    res.status(400).json(response);
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
+            }
+        });
+    }); };
     User.register = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-        var payload, isImage, imageType, newUser, response, error_1, response;
+        var payload, isImage, imageType, newUser, response, error_2, response;
         var _b, _c;
         return __generator(_a, function (_d) {
             switch (_d.label) {
@@ -71,15 +106,52 @@ var User = /** @class */ (function () {
                     res.status(201).json(response);
                     return [3 /*break*/, 4];
                 case 3:
-                    error_1 = _d.sent();
+                    error_2 = _d.sent();
                     response = {
                         status: {
                             code: 400,
                             response: 'fail',
-                            message: "".concat(error_1)
+                            message: "".concat(error_2)
                         }
                     };
                     res.status(400).json(response);
+                    return [3 /*break*/, 4];
+                case 4: return [2 /*return*/];
+            }
+        });
+    }); };
+    User.getUserById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+        var userId, getUser, response, error_3, response;
+        return __generator(_a, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    userId = req.params.id;
+                    _b.label = 1;
+                case 1:
+                    _b.trys.push([1, 3, , 4]);
+                    return [4 /*yield*/, user_1.default.getUserById(userId)];
+                case 2:
+                    getUser = _b.sent();
+                    response = {
+                        status: {
+                            code: 200,
+                            response: 'success',
+                            message: 'user has found.'
+                        },
+                        result: getUser
+                    };
+                    res.status(200).json(response);
+                    return [3 /*break*/, 4];
+                case 3:
+                    error_3 = _b.sent();
+                    response = {
+                        status: {
+                            code: 404,
+                            response: 'fail',
+                            message: "".concat(error_3)
+                        }
+                    };
+                    res.status(404).json(response);
                     return [3 /*break*/, 4];
                 case 4: return [2 /*return*/];
             }
