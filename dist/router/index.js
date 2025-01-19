@@ -8,6 +8,8 @@ var gtk_1 = __importDefault(require("../controllers/gtk"));
 var user_1 = __importDefault(require("../controllers/user"));
 var utils_1 = require("../utils");
 var router = express_1.default.Router();
+var userUri = '/api/v1/user';
+var gtkUri = '/api/v1/gtk';
 // router.get('/', (req: Request, res: Response) => {
 //   res.render('home', {
 //     layout: 'layouts/main',
@@ -15,15 +17,15 @@ var router = express_1.default.Router();
 //   });
 // })
 // FOR ADMIN
-router.get("".concat(process.env.USER_URL, "/:id"), user_1.default.getUserById);
-router.post("".concat(process.env.USER_URL), utils_1.handleImage, user_1.default.register);
-router.get("".concat(process.env.USER_URL), user_1.default.listUser);
-router.delete('/api/v1/user/:id', user_1.default.deleteUserById);
+router.get("".concat(userUri, "/:id"), user_1.default.getUserById);
+router.post("".concat(userUri), utils_1.handleImage, user_1.default.register);
+router.get("".concat(userUri), user_1.default.listUser);
+router.delete("".concat(userUri, "/:id"), user_1.default.deleteUserById);
 // GET GTK DATA
-router.get("".concat(process.env.GTK_URL), gtk_1.default.listGtk);
-router.get("".concat(process.env.GTK_URL, "/:id"), gtk_1.default.getGtkById);
-router.post("".concat(process.env.GTK_URL), utils_1.handleImage, gtk_1.default.createGtk);
-router.patch("".concat(process.env.GTK_URL, "/:id"), utils_1.handleImage, gtk_1.default.updateGtk);
-router.delete("".concat(process.env.GTK_URL, "/:id"), gtk_1.default.deleteGtkById);
+router.get("".concat(gtkUri), gtk_1.default.listGtk);
+router.get("".concat(gtkUri, "/:id"), gtk_1.default.getGtkById);
+router.post("".concat(gtkUri), utils_1.handleImage, gtk_1.default.createGtk);
+router.patch("".concat(gtkUri, "/:id"), utils_1.handleImage, gtk_1.default.updateGtk);
+router.delete("".concat(gtkUri, "/:id"), gtk_1.default.deleteGtkById);
 exports.default = router;
 //# sourceMappingURL=index.js.map
