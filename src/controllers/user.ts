@@ -49,7 +49,7 @@ export default class User {
   }
 
   static login = async (req: Request, res: Response): Promise<void> => {
-    const payload: UserRequest = req.body;
+    const payload = req.body;
     try {
       const response = await UserService.login(payload);
       res.status(200).json(response);

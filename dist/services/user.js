@@ -141,7 +141,7 @@ var UserService = /** @class */ (function () {
                     _b.trys.push([0, 3, , 4]);
                     username = payload.username, password = payload.password, role = payload.role;
                     if (!username || !password) {
-                        throw new Error("".concat(username ? 'username' : !password ? 'password' : null, " is required!"));
+                        throw new Error("".concat(!username ? 'username' : 'password', " is required!"));
                     }
                     return [4 /*yield*/, user_1.default.getUserByUsername(username)];
                 case 1:
@@ -161,8 +161,8 @@ var UserService = /** @class */ (function () {
                     }
                     ;
                     token = jsonwebtoken_1.default.sign({
-                        username: username,
-                        role: role
+                        user: username,
+                        role: getUser.role
                     }, process.env.SECRET_KEY, {
                         expiresIn: '1h'
                     });

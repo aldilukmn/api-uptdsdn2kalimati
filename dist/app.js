@@ -13,8 +13,8 @@ var app = (0, express_1.default)();
 app.use(express_1.default.static('public'));
 app.set('view engine', 'ejs');
 app.use(express_ejs_layouts_1.default);
-// app.use(express.urlencoded({ extended: true }));
-// app.use(express.json());
+app.use(express_1.default.urlencoded({ extended: true })); //For Login body json, POST METHOD
+// app.use(express.json()); //For Login body json, POST METHOD
 app.use((0, cors_1.default)());
 app.use('/', router_1.default);
 exports.default = app;

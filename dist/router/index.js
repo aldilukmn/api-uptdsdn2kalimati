@@ -7,6 +7,7 @@ var express_1 = __importDefault(require("express"));
 var gtk_1 = __importDefault(require("../controllers/gtk"));
 var user_1 = __importDefault(require("../controllers/user"));
 var utils_1 = require("../utils");
+var user_2 = __importDefault(require("../middlewares/user"));
 var router = express_1.default.Router();
 var userUri = '/api/v1/user';
 var gtkUri = '/api/v1/gtk';
@@ -19,8 +20,9 @@ var gtkUri = '/api/v1/gtk';
 // FOR ADMIN
 router.get("".concat(userUri, "/:id"), user_1.default.getUserById);
 router.post("".concat(userUri), utils_1.handleImage, user_1.default.register);
-router.get("".concat(userUri), user_1.default.listUser);
+router.get("".concat(userUri), user_2.default.verifyToken, user_1.default.listUser);
 router.delete("".concat(userUri, "/:id"), user_1.default.deleteUserById);
+router.post("".concat(userUri, "/login"), user_1.default.login);
 // GET GTK DATA
 router.get("".concat(gtkUri), gtk_1.default.listGtk);
 router.get("".concat(gtkUri, "/:id"), gtk_1.default.getGtkById);

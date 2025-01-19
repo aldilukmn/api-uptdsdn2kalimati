@@ -10,8 +10,8 @@ const app = express();
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 app.use(expressEjsLayouts);
-// app.use(express.urlencoded({ extended: true }));
-// app.use(express.json());
+app.use(express.urlencoded({ extended: true })); //For Login body json, POST METHOD
+// app.use(express.json()); //For Login body json, POST METHOD
 app.use(cors());
 app.use('/', rounter);
 

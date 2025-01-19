@@ -77,7 +77,7 @@ export default class UserService {
       const { username, password, role } = payload;
 
       if (!username || !password) {
-        throw new Error(`${username ? 'username' : !password ? 'password': null} is required!`)
+        throw new Error(`${!username ? 'username' : 'password'} is required!`);
       }
 
       const getUser = await UserRepository.getUserByUsername(username);
@@ -98,8 +98,8 @@ export default class UserService {
       };
 
       const token = jwt.sign({
-        username,
-        role
+        user: username,
+        role: getUser.role
       }, process.env.SECRET_KEY, {
         expiresIn: '1h'
       });

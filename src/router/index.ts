@@ -1,8 +1,8 @@
-
 import express from 'express';
 import Gtk from '../controllers/gtk';
 import User from '../controllers/user';
 import { handleImage } from '../utils';
+import UserMiddleware from '../middlewares/user';
 
 const router = express.Router();
 const userUri = '/api/v1/user';
@@ -18,8 +18,9 @@ const gtkUri = '/api/v1/gtk';
 // FOR ADMIN
 router.get(`${userUri}/:id`, User.getUserById);
 router.post(`${userUri}`, handleImage, User.register);
-router.get(`${userUri}`, User.listUser);
+router.get(`${userUri}`, UserMiddleware.verifyToken, User.listUser);
 router.delete(`${userUri}/:id`, User.deleteUserById);
+router.post(`${userUri}/login`, User.login);
 
 // GET GTK DATA
 router.get(`${gtkUri}`, Gtk.listGtk);
