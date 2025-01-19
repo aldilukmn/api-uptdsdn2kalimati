@@ -3,9 +3,10 @@ import cloudinary from '../config/cloudinary'
 import GtkRequest from '../models/dto/gtk'
 import Gtk from '../models/entity/gtk'
 import GtkRepository from '../repositories/gtk'
+import { handleCloudinary } from '../utils';
 
 export default class GtkService {
-  static createGtk = async (payload: GtkRequest, image: string | undefined, typeImage: any): Promise<GtkRequest> => {
+  static createGtk = async (payload: GtkRequest, image: string | undefined, typeImage: any): Promise<GtkRequest | undefined> => {
     try {
       if(!payload.status || !payload.name) {
         throw new Error(`${
@@ -28,14 +29,7 @@ export default class GtkService {
         throw new Error('Image is undefined!');
       }
 
-      const imageUrl = await cloudinary.uploader.upload(image, { folder: 'gtk'},
-        function (err: any, result: any) {
-          if (err) {
-            throw new Error('Failed to upload image to cloudinary!')
-          }
-          return result
-        }
-      )
+      const imageUrl = await handleCloudinary(image, 'gtk');
 
       const newGtk: GtkRequest = {
         status: payload.status.toLowerCase(),
@@ -51,17 +45,21 @@ export default class GtkService {
       }
       await GtkRepository.createGtk(newGtk);
       return newGtk
-    } catch (error: any) {
-      throw error.message;
+    } catch (e) {
+      if (e instanceof Error) {
+        throw new Error(e.message);
+      }
     }
   }
 
-  static getGtkById = async (gtkId: string): Promise<Gtk> => {
+  static getGtkById = async (gtkId: string): Promise<Gtk | undefined> => {
     try {
       const getGtk = await GtkRepository.getGtkById(gtkId);
-      return getGtk as Gtk;
-    } catch (error: any) {
-      throw new Error(error.message || 'Unknown error occurred!')
+      return getGtk;
+    } catch (e) {
+      if (e instanceof Error) {
+        throw new Error(e.message);
+      }
     }
   }
 
@@ -69,12 +67,14 @@ export default class GtkService {
     try {
       const deleteGtk = await GtkRepository.deleteGtkById(gtkId);
       return deleteGtk;
-    } catch (error: any) {
-      throw new Error(error.message || 'Unknown error occurred!')
+    } catch (e) {
+      if (e instanceof Error) {
+        throw new Error(e.message);
+      }
     }
   }
 
-  static updateGtk = async (res: Response, payload: GtkRequest, gtkId: string, image: string | undefined, typeImage: any): Promise<Gtk> => {
+  static updateGtk = async (res: Response, payload: GtkRequest, gtkId: string, image: string | undefined, typeImage: any): Promise<Gtk | undefined> => {
     let gtkUpdate: GtkRequest;
     try {
       if (image) {
@@ -85,21 +85,18 @@ export default class GtkService {
         ) {
           throw new Error('It\'s not image format!')
         }
-        const newImageUrl = await cloudinary.uploader.upload(image, { folder: 'gtk'},
-          function (err: any, result: any) {
-            if (err) {
-              throw new Error('Failed to upload image to cloudinary!')
-            }
-            return result
-          }
-        )
+
+        const newImageUrl = await handleCloudinary(image, 'gtk');
+        
         gtkUpdate = await GtkService.saveUpdate(payload, gtkId, newImageUrl.secure_url, newImageUrl.public_id)
       } else {
         gtkUpdate = await GtkService.saveUpdate(payload, gtkId)
       }
       return gtkUpdate as Gtk;
-    } catch (error: any) {
-      throw new Error(error.message || 'Unknown error occurred')
+    } catch (e) {
+      if (e instanceof Error) {
+        throw new Error(e.message);
+      }
     }
   }
 

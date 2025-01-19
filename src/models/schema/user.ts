@@ -11,7 +11,7 @@ const UserSchema: Schema = new Schema(
       type: String,
       require: true
     },
-    emal: {
+    email: {
       type: String,
       require: true
     },

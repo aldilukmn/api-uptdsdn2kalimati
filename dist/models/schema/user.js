@@ -43,7 +43,7 @@ var UserSchema = new mongoose_1.Schema({
         type: String,
         require: true
     },
-    emal: {
+    email: {
         type: String,
         require: true
     },

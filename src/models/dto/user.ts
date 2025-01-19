@@ -5,4 +5,4 @@ export default interface UserRequest {
   role?: string;
   image_url?: string;
   image_id?: string
-}
+};

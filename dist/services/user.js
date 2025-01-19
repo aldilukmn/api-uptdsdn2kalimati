@@ -39,16 +39,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var cloudinary_1 = __importDefault(require("../config/cloudinary"));
 var user_1 = __importDefault(require("../repositories/user"));
 var bcrypt_1 = __importDefault(require("bcrypt"));
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+var utils_1 = require("../utils");
 var UserService = /** @class */ (function () {
     function UserService() {
     }
     var _a;
     _a = UserService;
     UserService.register = function (payload, isImage, imageType) { return __awaiter(void 0, void 0, void 0, function () {
-        var username, password, email, role, getUsername, getUserEmail, imageUrl, salt, hasPass, newUser, error_1;
+        var username, password, email, role, getUsername, getUserEmail, imageUrl, salt, hasPass, newUser, e_1;
         return __generator(_a, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -82,14 +83,7 @@ var UserService = /** @class */ (function () {
                     if (getUsername !== null && getUsername !== void 0 ? getUsername : getUserEmail) {
                         throw new Error("".concat(getUsername ? 'username' : 'email', " already exist!"));
                     }
-                    return [4 /*yield*/, cloudinary_1.default.uploader.upload(isImage, {
-                            folder: 'user'
-                        }, function (err, result) {
-                            if (err) {
-                                throw new Error('Failed to upload image to cloudinary!');
-                            }
-                            return result;
-                        })];
+                    return [4 /*yield*/, (0, utils_1.handleCloudinary)(isImage, 'user')];
                 case 4:
                     imageUrl = _b.sent();
                     return [4 /*yield*/, bcrypt_1.default.genSalt()];
@@ -111,14 +105,19 @@ var UserService = /** @class */ (function () {
                     _b.sent();
                     return [2 /*return*/, newUser];
                 case 8:
-                    error_1 = _b.sent();
-                    throw error_1;
-                case 9: return [2 /*return*/];
+                    e_1 = _b.sent();
+                    if (e_1 instanceof Error) {
+                        throw new Error(e_1.message);
+                    }
+                    return [3 /*break*/, 9];
+                case 9:
+                    ;
+                    return [2 /*return*/];
             }
         });
     }); };
     UserService.getUserById = function (userId) { return __awaiter(void 0, void 0, void 0, function () {
-        var getUser, error_2;
+        var getUser, error_1;
         return __generator(_a, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -128,8 +127,73 @@ var UserService = /** @class */ (function () {
                     getUser = _b.sent();
                     return [2 /*return*/, getUser];
                 case 2:
-                    error_2 = _b.sent();
-                    throw error_2;
+                    error_1 = _b.sent();
+                    throw error_1;
+                case 3: return [2 /*return*/];
+            }
+        });
+    }); };
+    UserService.login = function (payload) { return __awaiter(void 0, void 0, void 0, function () {
+        var username, password, role, getUser, passIsCorrect, response_1, token, response, e_2;
+        return __generator(_a, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    _b.trys.push([0, 3, , 4]);
+                    username = payload.username, password = payload.password, role = payload.role;
+                    if (!username || !password) {
+                        throw new Error("".concat(username ? 'username' : !password ? 'password' : null, " is required!"));
+                    }
+                    return [4 /*yield*/, user_1.default.getUserByUsername(username)];
+                case 1:
+                    getUser = _b.sent();
+                    if (!getUser || !getUser.username) {
+                        throw new Error('username doesn\'t exist!');
+                    }
+                    return [4 /*yield*/, bcrypt_1.default.compare(password, getUser.password)];
+                case 2:
+                    passIsCorrect = _b.sent();
+                    if (!passIsCorrect) {
+                        throw new Error('wrong password!');
+                    }
+                    if (!process.env.SECRET_KEY) {
+                        response_1 = (0, utils_1.createDefaultResponse)(500, 'fail', 'secret key is not defined in the environment variable!');
+                        return [2 /*return*/, response_1];
+                    }
+                    ;
+                    token = jsonwebtoken_1.default.sign({
+                        username: username,
+                        role: role
+                    }, process.env.SECRET_KEY, {
+                        expiresIn: '1h'
+                    });
+                    response = (0, utils_1.createDefaultResponse)(200, 'success', "".concat(username, " successfully login"), token);
+                    return [2 /*return*/, response];
+                case 3:
+                    e_2 = _b.sent();
+                    if (e_2 instanceof Error)
+                        throw new Error(e_2.message);
+                    return [3 /*break*/, 4];
+                case 4:
+                    ;
+                    return [2 /*return*/];
+            }
+        });
+    }); };
+    UserService.deleteUserById = function (userId) { return __awaiter(void 0, void 0, void 0, function () {
+        var deleteUser, e_3;
+        return __generator(_a, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    _b.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, user_1.default.deleteUserById(userId)];
+                case 1:
+                    deleteUser = _b.sent();
+                    return [2 /*return*/, deleteUser];
+                case 2:
+                    e_3 = _b.sent();
+                    if (e_3 instanceof Error)
+                        throw new Error(e_3.message);
+                    return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
             }
         });

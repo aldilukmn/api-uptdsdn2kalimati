@@ -1,4 +1,4 @@
-export default interface DefaultResponse {
+export default interface ResponseType {
   status: {
     code: number,
     response: string,

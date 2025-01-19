@@ -1,8 +1,8 @@
 
 import express from 'express';
 import Gtk from '../controllers/gtk';
-import handleImage from '../utils/uploadFile';
 import User from '../controllers/user';
+import { handleImage } from '../utils';
 
 const router = express.Router();
 
@@ -14,15 +14,16 @@ const router = express.Router();
 // })
 
 // FOR ADMIN
-router.get('/api/v1/user/:id', User.getUserById);
-router.post('/api/v1/user', handleImage, User.register);
-router.get('/api/v1/user', User.listUser);
+router.get(`${process.env.USER_URL}/:id`, User.getUserById);
+router.post(`${process.env.USER_URL}`, handleImage, User.register);
+router.get(`${process.env.USER_URL}`, User.listUser);
+router.delete('/api/v1/user/:id', User.deleteUserById);
 
 // GET GTK DATA
-router.get('/api/v1/gtk', Gtk.listGtk);
-router.get('/api/v1/gtk/:id', Gtk.getGtkById);
-router.post('/api/v1/gtk', handleImage, Gtk.createGtk);
-router.patch('/api/v1/gtk/:id', handleImage, Gtk.updateGtk);
-router.delete('/api/v1/gtk/:id', Gtk.deleteGtkById);
+router.get(`${process.env.GTK_URL}`, Gtk.listGtk);
+router.get(`${process.env.GTK_URL}/:id`, Gtk.getGtkById);
+router.post(`${process.env.GTK_URL}`, handleImage, Gtk.createGtk);
+router.patch(`${process.env.GTK_URL}/:id`, handleImage, Gtk.updateGtk);
+router.delete(`${process.env.GTK_URL}/:id`, Gtk.deleteGtkById);
 
 export default router

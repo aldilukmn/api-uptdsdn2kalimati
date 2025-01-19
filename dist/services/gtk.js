@@ -39,8 +39,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var cloudinary_1 = __importDefault(require("../config/cloudinary"));
 var gtk_1 = __importDefault(require("../repositories/gtk"));
+var utils_1 = require("../utils");
 var GtkService = /** @class */ (function () {
     function GtkService() {
     }
@@ -79,7 +79,7 @@ var GtkService = /** @class */ (function () {
     var _a;
     _a = GtkService;
     GtkService.createGtk = function (payload, image, typeImage) { return __awaiter(void 0, void 0, void 0, function () {
-        var imageUrl, newGtk, error_1;
+        var imageUrl, newGtk, e_1;
         var _b, _c;
         return __generator(_a, function (_d) {
             switch (_d.label) {
@@ -98,12 +98,7 @@ var GtkService = /** @class */ (function () {
                     if (!image) {
                         throw new Error('Image is undefined!');
                     }
-                    return [4 /*yield*/, cloudinary_1.default.uploader.upload(image, { folder: 'gtk' }, function (err, result) {
-                            if (err) {
-                                throw new Error('Failed to upload image to cloudinary!');
-                            }
-                            return result;
-                        })];
+                    return [4 /*yield*/, (0, utils_1.handleCloudinary)(image, 'gtk')];
                 case 1:
                     imageUrl = _d.sent();
                     newGtk = {
@@ -123,14 +118,17 @@ var GtkService = /** @class */ (function () {
                     _d.sent();
                     return [2 /*return*/, newGtk];
                 case 3:
-                    error_1 = _d.sent();
-                    throw error_1.message;
+                    e_1 = _d.sent();
+                    if (e_1 instanceof Error) {
+                        throw new Error(e_1.message);
+                    }
+                    return [3 /*break*/, 4];
                 case 4: return [2 /*return*/];
             }
         });
     }); };
     GtkService.getGtkById = function (gtkId) { return __awaiter(void 0, void 0, void 0, function () {
-        var getGtk, error_2;
+        var getGtk, e_2;
         return __generator(_a, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -140,14 +138,17 @@ var GtkService = /** @class */ (function () {
                     getGtk = _b.sent();
                     return [2 /*return*/, getGtk];
                 case 2:
-                    error_2 = _b.sent();
-                    throw new Error(error_2.message || 'Unknown error occurred!');
+                    e_2 = _b.sent();
+                    if (e_2 instanceof Error) {
+                        throw new Error(e_2.message);
+                    }
+                    return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
             }
         });
     }); };
     GtkService.deleteGtkById = function (gtkId) { return __awaiter(void 0, void 0, void 0, function () {
-        var deleteGtk, error_3;
+        var deleteGtk, e_3;
         return __generator(_a, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -157,14 +158,17 @@ var GtkService = /** @class */ (function () {
                     deleteGtk = _b.sent();
                     return [2 /*return*/, deleteGtk];
                 case 2:
-                    error_3 = _b.sent();
-                    throw new Error(error_3.message || 'Unknown error occurred!');
+                    e_3 = _b.sent();
+                    if (e_3 instanceof Error) {
+                        throw new Error(e_3.message);
+                    }
+                    return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
             }
         });
     }); };
     GtkService.updateGtk = function (res, payload, gtkId, image, typeImage) { return __awaiter(void 0, void 0, void 0, function () {
-        var gtkUpdate, newImageUrl, error_4;
+        var gtkUpdate, newImageUrl, e_4;
         return __generator(_a, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -175,12 +179,7 @@ var GtkService = /** @class */ (function () {
                         typeImage !== 'image/jpeg') {
                         throw new Error('It\'s not image format!');
                     }
-                    return [4 /*yield*/, cloudinary_1.default.uploader.upload(image, { folder: 'gtk' }, function (err, result) {
-                            if (err) {
-                                throw new Error('Failed to upload image to cloudinary!');
-                            }
-                            return result;
-                        })];
+                    return [4 /*yield*/, (0, utils_1.handleCloudinary)(image, 'gtk')];
                 case 1:
                     newImageUrl = _b.sent();
                     return [4 /*yield*/, _a.saveUpdate(payload, gtkId, newImageUrl.secure_url, newImageUrl.public_id)];
@@ -193,8 +192,11 @@ var GtkService = /** @class */ (function () {
                     _b.label = 5;
                 case 5: return [2 /*return*/, gtkUpdate];
                 case 6:
-                    error_4 = _b.sent();
-                    throw new Error(error_4.message || 'Unknown error occurred');
+                    e_4 = _b.sent();
+                    if (e_4 instanceof Error) {
+                        throw new Error(e_4.message);
+                    }
+                    return [3 /*break*/, 7];
                 case 7: return [2 /*return*/];
             }
         });

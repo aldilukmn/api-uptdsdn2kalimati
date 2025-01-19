@@ -53,13 +53,12 @@ export default class GtkRepository {
 
   // Delete GTK
   static async deleteGtkById(gtkId: string): Promise<void> {
-    // Validasi format ID
     if (!mongoose.Types.ObjectId.isValid(gtkId)) {
-      throw new Error(`Invalid id format: ${gtkId}`);
+      throw new Error(`invalid id format: ${gtkId}`);
     };
     const gtkData = await GtkModel.findById(gtkId);
     if (!gtkData) {
-      throw new Error(`GTK with id ${gtkId} not found!`)
+      throw new Error(`gtk with id ${gtkId} not found!`)
     };
 
     if (gtkData.image_id) {

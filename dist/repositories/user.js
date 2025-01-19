@@ -41,6 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = __importDefault(require("mongoose"));
 var user_1 = __importDefault(require("../models/schema/user"));
+var cloudinary_1 = __importDefault(require("../config/cloudinary"));
 var UserRepository = /** @class */ (function () {
     function UserRepository() {
     }
@@ -109,6 +110,39 @@ var UserRepository = /** @class */ (function () {
                         }
                         ;
                         return [2 /*return*/, userData];
+                }
+            });
+        });
+    };
+    ;
+    UserRepository.deleteUserById = function (userId) {
+        return __awaiter(this, void 0, void 0, function () {
+            var userData;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!mongoose_1.default.Types.ObjectId.isValid(userId)) {
+                            throw new Error("invalid id format: ".concat(userId));
+                        }
+                        ;
+                        return [4 /*yield*/, user_1.default.findById(userId)];
+                    case 1:
+                        userData = _a.sent();
+                        if (!userData) {
+                            throw new Error("user with id ".concat(userId, " not found!"));
+                        }
+                        ;
+                        if (!userData.image_id) return [3 /*break*/, 3];
+                        return [4 /*yield*/, cloudinary_1.default.uploader.destroy(userData.image_id)];
+                    case 2:
+                        _a.sent();
+                        _a.label = 3;
+                    case 3:
+                        ;
+                        return [4 /*yield*/, user_1.default.findByIdAndDelete(userId)];
+                    case 4:
+                        _a.sent();
+                        return [2 /*return*/];
                 }
             });
         });

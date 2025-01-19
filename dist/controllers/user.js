@@ -41,13 +41,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var user_1 = __importDefault(require("../services/user"));
 var user_2 = __importDefault(require("../models/schema/user"));
+var utils_1 = require("../utils");
 var User = /** @class */ (function () {
     function User() {
     }
     var _a;
     _a = User;
     User.listUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-        var userData, response, error_1, response;
+        var userData, response, e_1, response;
         return __generator(_a, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -55,33 +56,25 @@ var User = /** @class */ (function () {
                     return [4 /*yield*/, user_2.default.find()];
                 case 1:
                     userData = _b.sent();
-                    response = {
-                        status: {
-                            code: 200,
-                            response: 'success',
-                            message: 'user successfully retrieved.'
-                        },
-                        result: userData
-                    };
+                    response = (0, utils_1.createDefaultResponse)(200, 'success', 'user successfully retrieved', userData);
                     res.status(200).json(response);
                     return [3 /*break*/, 3];
                 case 2:
-                    error_1 = _b.sent();
-                    response = {
-                        status: {
-                            code: 400,
-                            response: 'error',
-                            message: error_1
-                        }
-                    };
-                    res.status(400).json(response);
+                    e_1 = _b.sent();
+                    if (e_1 instanceof Error) {
+                        response = (0, utils_1.createDefaultResponse)(400, 'fail', e_1.message);
+                        res.status(400).json(response);
+                    }
+                    ;
                     return [3 /*break*/, 3];
-                case 3: return [2 /*return*/];
+                case 3:
+                    ;
+                    return [2 /*return*/];
             }
         });
     }); };
     User.register = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-        var payload, isImage, imageType, newUser, response, error_2, response;
+        var payload, isImage, imageType, newUser, response, e_2, response;
         var _b, _c;
         return __generator(_a, function (_d) {
             switch (_d.label) {
@@ -95,33 +88,25 @@ var User = /** @class */ (function () {
                     return [4 /*yield*/, user_1.default.register(payload, isImage, imageType)];
                 case 2:
                     newUser = _d.sent();
-                    response = {
-                        status: {
-                            code: 201,
-                            response: 'success',
-                            message: 'User successfully created.'
-                        },
-                        result: newUser
-                    };
+                    response = (0, utils_1.createDefaultResponse)(201, 'success', 'user successfully created', newUser);
                     res.status(201).json(response);
                     return [3 /*break*/, 4];
                 case 3:
-                    error_2 = _d.sent();
-                    response = {
-                        status: {
-                            code: 400,
-                            response: 'fail',
-                            message: "".concat(error_2)
-                        }
-                    };
-                    res.status(400).json(response);
+                    e_2 = _d.sent();
+                    if (e_2 instanceof Error) {
+                        response = (0, utils_1.createDefaultResponse)(400, 'fail', e_2.message);
+                        res.status(400).json(response);
+                    }
+                    ;
                     return [3 /*break*/, 4];
-                case 4: return [2 /*return*/];
+                case 4:
+                    ;
+                    return [2 /*return*/];
             }
         });
     }); };
     User.getUserById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-        var userId, getUser, response, error_3, response;
+        var userId, getUser, response, e_3, response;
         return __generator(_a, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -132,26 +117,69 @@ var User = /** @class */ (function () {
                     return [4 /*yield*/, user_1.default.getUserById(userId)];
                 case 2:
                     getUser = _b.sent();
-                    response = {
-                        status: {
-                            code: 200,
-                            response: 'success',
-                            message: 'user has found.'
-                        },
-                        result: getUser
-                    };
+                    response = (0, utils_1.createDefaultResponse)(200, 'success', 'user has found', getUser);
                     res.status(200).json(response);
                     return [3 /*break*/, 4];
                 case 3:
-                    error_3 = _b.sent();
-                    response = {
-                        status: {
-                            code: 404,
-                            response: 'fail',
-                            message: "".concat(error_3)
-                        }
-                    };
-                    res.status(404).json(response);
+                    e_3 = _b.sent();
+                    if (e_3 instanceof Error) {
+                        response = (0, utils_1.createDefaultResponse)(404, 'fail', e_3.message);
+                        res.status(404).json(response);
+                    }
+                    ;
+                    return [3 /*break*/, 4];
+                case 4:
+                    ;
+                    return [2 /*return*/];
+            }
+        });
+    }); };
+    User.login = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+        var payload, response, e_4, response;
+        return __generator(_a, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    payload = req.body;
+                    _b.label = 1;
+                case 1:
+                    _b.trys.push([1, 3, , 4]);
+                    return [4 /*yield*/, user_1.default.login(payload)];
+                case 2:
+                    response = _b.sent();
+                    res.status(200).json(response);
+                    return [3 /*break*/, 4];
+                case 3:
+                    e_4 = _b.sent();
+                    if (e_4 instanceof Error) {
+                        response = (0, utils_1.createDefaultResponse)(400, 'fail', e_4.message);
+                        res.status(400).json(response);
+                    }
+                    return [3 /*break*/, 4];
+                case 4: return [2 /*return*/];
+            }
+        });
+    }); };
+    User.deleteUserById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+        var userId, response, e_5, response;
+        return __generator(_a, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    userId = req.params.id;
+                    _b.label = 1;
+                case 1:
+                    _b.trys.push([1, 3, , 4]);
+                    return [4 /*yield*/, user_1.default.deleteUserById(userId)];
+                case 2:
+                    _b.sent();
+                    response = (0, utils_1.createDefaultResponse)(200, 'success', 'user successfully deleted');
+                    res.status(200).json(response);
+                    return [3 /*break*/, 4];
+                case 3:
+                    e_5 = _b.sent();
+                    if (e_5 instanceof Error) {
+                        response = (0, utils_1.createDefaultResponse)(400, 'fail', e_5.message);
+                        res.status(400).json(response);
+                    }
                     return [3 /*break*/, 4];
                 case 4: return [2 /*return*/];
             }
