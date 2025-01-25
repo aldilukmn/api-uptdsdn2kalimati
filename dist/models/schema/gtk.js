@@ -59,7 +59,7 @@ var GtkSchema = new mongoose_1.Schema({
         type: String,
         require: true
     },
-    totalStudent: {
+    total_student: {
         male: {
             type: Number,
             require: false

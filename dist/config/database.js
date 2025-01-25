@@ -42,7 +42,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.connectDB = void 0;
 var mongoose_1 = __importDefault(require("mongoose"));
 var connectDB = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var error_1;
+    var e_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -53,9 +53,11 @@ var connectDB = function () { return __awaiter(void 0, void 0, void 0, function 
                 console.log('Connected to MongoDB');
                 return [3 /*break*/, 3];
             case 2:
-                error_1 = _a.sent();
-                console.log('Failed to connect to MongoDB', error_1);
-                process.exit(1);
+                e_1 = _a.sent();
+                if (e_1 instanceof Error) {
+                    console.log('Failed to connect to MongoDB', e_1.message);
+                    process.exit(1);
+                }
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }

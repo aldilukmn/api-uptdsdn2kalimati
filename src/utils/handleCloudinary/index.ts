@@ -15,8 +15,11 @@ const handleCloudinary = async (
       public_id: result.public_id
      }
      return importData;
-  } catch (err) {
-    throw new Error('failed to upload image to cloudinary!')
+  } catch (e) {
+    if (e instanceof Error) {
+      throw new Error('failed to upload image to cloudinary!');
+    };
+    throw new Error('unknow error occured!');
   }
 };
 

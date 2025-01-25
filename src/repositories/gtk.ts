@@ -27,11 +27,11 @@ export default class GtkRepository {
   static async updateGtk (gtkId: string, data: GtkRequest): Promise<Gtk> {
 
     if (!gtkId) {
-      throw new Error('GTK ID is required!');
+      throw new Error('gtk id is required!');
     }
 
     if (!data) {
-      throw new Error('No data provided for update!');
+      throw new Error('no data provided for update!');
     }
 
     const updatedGtk = await GtkModel.findByIdAndUpdate(
@@ -42,10 +42,10 @@ export default class GtkRepository {
         new: true, 
         runValidators: true
       }
-    )
+    );
 
     if (!updatedGtk) {
-      throw new Error(`GTK with Id ${gtkId} not found!`);
+      throw new Error(`gtk with id ${gtkId} not found!`);
     }
 
     return updatedGtk

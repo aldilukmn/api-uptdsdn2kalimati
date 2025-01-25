@@ -88,10 +88,10 @@ var GtkRepository = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         if (!gtkId) {
-                            throw new Error('GTK ID is required!');
+                            throw new Error('gtk id is required!');
                         }
                         if (!data) {
-                            throw new Error('No data provided for update!');
+                            throw new Error('no data provided for update!');
                         }
                         return [4 /*yield*/, gtk_1.default.findByIdAndUpdate(gtkId, {
                                 $set: data,
@@ -102,7 +102,7 @@ var GtkRepository = /** @class */ (function () {
                     case 1:
                         updatedGtk = _a.sent();
                         if (!updatedGtk) {
-                            throw new Error("GTK with Id ".concat(gtkId, " not found!"));
+                            throw new Error("gtk with id ".concat(gtkId, " not found!"));
                         }
                         return [2 /*return*/, updatedGtk];
                 }

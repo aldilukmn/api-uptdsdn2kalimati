@@ -16,11 +16,12 @@ const gtkUri = '/api/v1/gtk';
 // })
 
 // FOR ADMIN
-router.get(`${userUri}/:id`, User.getUserById);
-router.post(`${userUri}`, handleImage, User.register);
-router.get(`${userUri}`, UserMiddleware.verifyToken, User.listUser);
-router.delete(`${userUri}/:id`, User.deleteUserById);
+router.get(`${userUri}/:id`, UserMiddleware.verifyToken, UserMiddleware.isAdmin, User.getUserById);
+router.post(`${userUri}`, UserMiddleware.verifyToken, UserMiddleware.isAdmin, handleImage, User.register);
+router.get(`${userUri}`, UserMiddleware.verifyToken, UserMiddleware.isAdmin, User.listUser);
+router.delete(`${userUri}/:id`, UserMiddleware.verifyToken, UserMiddleware.isAdmin, User.deleteUserById);
 router.post(`${userUri}/login`, User.login);
+router.patch(`${userUri}/:id`, UserMiddleware.verifyToken, UserMiddleware.isAdmin, handleImage, User.updateUserById);
 
 // GET GTK DATA
 router.get(`${gtkUri}`, Gtk.listGtk);
@@ -29,4 +30,4 @@ router.post(`${gtkUri}`, handleImage, Gtk.createGtk);
 router.patch(`${gtkUri}/:id`, handleImage, Gtk.updateGtk);
 router.delete(`${gtkUri}/:id`, Gtk.deleteGtkById);
 
-export default router
+export default router;

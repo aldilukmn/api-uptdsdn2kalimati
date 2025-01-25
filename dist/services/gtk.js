@@ -78,7 +78,7 @@ var GtkService = /** @class */ (function () {
     };
     var _a;
     _a = GtkService;
-    GtkService.createGtk = function (payload, image, typeImage) { return __awaiter(void 0, void 0, void 0, function () {
+    GtkService.createGtk = function (payload, image, imageType) { return __awaiter(void 0, void 0, void 0, function () {
         var imageUrl, newGtk, e_1;
         var _b, _c;
         return __generator(_a, function (_d) {
@@ -90,14 +90,15 @@ var GtkService = /** @class */ (function () {
                             : !payload.name ? 'name'
                                 : null, " is required!"));
                     }
-                    if (typeImage !== 'image/png' &&
-                        typeImage !== 'image/jpg' &&
-                        typeImage !== 'image/jpeg') {
+                    ;
+                    if (!(0, utils_1.isValidImage)(imageType)) {
                         throw new Error('It\'s not image format!');
                     }
+                    ;
                     if (!image) {
                         throw new Error('Image is undefined!');
                     }
+                    ;
                     return [4 /*yield*/, (0, utils_1.handleCloudinary)(image, 'gtk')];
                 case 1:
                     imageUrl = _d.sent();
@@ -167,16 +168,14 @@ var GtkService = /** @class */ (function () {
             }
         });
     }); };
-    GtkService.updateGtk = function (res, payload, gtkId, image, typeImage) { return __awaiter(void 0, void 0, void 0, function () {
+    GtkService.updateGtk = function (payload, gtkId, image, imageType) { return __awaiter(void 0, void 0, void 0, function () {
         var gtkUpdate, newImageUrl, e_4;
         return __generator(_a, function (_b) {
             switch (_b.label) {
                 case 0:
                     _b.trys.push([0, 6, , 7]);
                     if (!image) return [3 /*break*/, 3];
-                    if (typeImage !== 'image/png' &&
-                        typeImage !== 'image/jpg' &&
-                        typeImage !== 'image/jpeg') {
+                    if (!(0, utils_1.isValidImage)(imageType)) {
                         throw new Error('It\'s not image format!');
                     }
                     return [4 /*yield*/, (0, utils_1.handleCloudinary)(image, 'gtk')];

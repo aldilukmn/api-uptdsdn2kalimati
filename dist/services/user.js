@@ -46,6 +46,40 @@ var utils_1 = require("../utils");
 var UserService = /** @class */ (function () {
     function UserService() {
     }
+    UserService.saveUpdate = function (options, userId, newImageUrl, newImageId) {
+        return __awaiter(this, void 0, void 0, function () {
+            var password, salt, newHasPass, existingUser, passIsCorrect, updateUser;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        password = options.password;
+                        return [4 /*yield*/, bcrypt_1.default.genSalt()];
+                    case 1:
+                        salt = _b.sent();
+                        return [4 /*yield*/, bcrypt_1.default.hash(password, salt)];
+                    case 2:
+                        newHasPass = _b.sent();
+                        return [4 /*yield*/, user_1.default.getUserById(userId)];
+                    case 3:
+                        existingUser = _b.sent();
+                        return [4 /*yield*/, bcrypt_1.default.compare(password, existingUser.password)];
+                    case 4:
+                        passIsCorrect = _b.sent();
+                        updateUser = {
+                            username: existingUser.username,
+                            password: !passIsCorrect ? newHasPass : existingUser.password,
+                            image_url: newImageUrl || existingUser.image_url,
+                            image_id: newImageId || existingUser.image_id
+                        };
+                        return [4 /*yield*/, user_1.default.updateUser(userId, updateUser)];
+                    case 5:
+                        _b.sent();
+                        return [2 /*return*/, updateUser];
+                }
+            });
+        });
+    };
+    ;
     var _a;
     _a = UserService;
     UserService.register = function (payload, isImage, imageType) { return __awaiter(void 0, void 0, void 0, function () {
@@ -66,11 +100,10 @@ var UserService = /** @class */ (function () {
                     if (password.length < 8) {
                         throw new Error('Password length should be more than 8 characters!');
                     }
-                    if (imageType !== 'image/png' &&
-                        imageType !== 'image/jpg' &&
-                        imageType !== 'image/jpeg') {
+                    if ((0, utils_1.isValidImage)(imageType)) {
                         throw new Error('It\'s not image format!');
                     }
+                    ;
                     if (!isImage) {
                         throw new Error('Image is undefined!');
                     }
@@ -117,29 +150,23 @@ var UserService = /** @class */ (function () {
         });
     }); };
     UserService.getUserById = function (userId) { return __awaiter(void 0, void 0, void 0, function () {
-        var getUser, error_1;
+        var getUser;
         return __generator(_a, function (_b) {
             switch (_b.label) {
-                case 0:
-                    _b.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, user_1.default.getUserById(userId)];
+                case 0: return [4 /*yield*/, user_1.default.getUserById(userId)];
                 case 1:
                     getUser = _b.sent();
                     return [2 /*return*/, getUser];
-                case 2:
-                    error_1 = _b.sent();
-                    throw error_1;
-                case 3: return [2 /*return*/];
             }
         });
     }); };
     UserService.login = function (payload) { return __awaiter(void 0, void 0, void 0, function () {
-        var username, password, role, getUser, passIsCorrect, response_1, token, response, e_2;
+        var username, password, getUser, passIsCorrect, token, e_2;
         return __generator(_a, function (_b) {
             switch (_b.label) {
                 case 0:
                     _b.trys.push([0, 3, , 4]);
-                    username = payload.username, password = payload.password, role = payload.role;
+                    username = payload.username, password = payload.password;
                     if (!username || !password) {
                         throw new Error("".concat(!username ? 'username' : 'password', " is required!"));
                     }
@@ -155,9 +182,11 @@ var UserService = /** @class */ (function () {
                     if (!passIsCorrect) {
                         throw new Error('wrong password!');
                     }
+                    ;
                     if (!process.env.SECRET_KEY) {
-                        response_1 = (0, utils_1.createDefaultResponse)(500, 'fail', 'secret key is not defined in the environment variable!');
-                        return [2 /*return*/, response_1];
+                        // const response = createDefaultResponse(500, 'fail', 'secret key is not defined in the environment variable!')
+                        // return response;
+                        throw new Error('secret key is not defined in the environment variable!');
                     }
                     ;
                     token = jsonwebtoken_1.default.sign({
@@ -166,13 +195,15 @@ var UserService = /** @class */ (function () {
                     }, process.env.SECRET_KEY, {
                         expiresIn: '1h'
                     });
-                    response = (0, utils_1.createDefaultResponse)(200, 'success', "".concat(username, " successfully login"), token);
-                    return [2 /*return*/, response];
+                    return [2 /*return*/, {
+                            token: token,
+                            username: username
+                        }];
                 case 3:
                     e_2 = _b.sent();
                     if (e_2 instanceof Error)
                         throw new Error(e_2.message);
-                    return [3 /*break*/, 4];
+                    throw new Error('an unknow error occured during login');
                 case 4:
                     ;
                     return [2 /*return*/];
@@ -195,6 +226,39 @@ var UserService = /** @class */ (function () {
                         throw new Error(e_3.message);
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
+            }
+        });
+    }); };
+    UserService.updateUser = function (payload, userId, image, imageType) { return __awaiter(void 0, void 0, void 0, function () {
+        var userUpdate, newImageUrl, e_4;
+        return __generator(_a, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    _b.trys.push([0, 6, , 7]);
+                    if (!image) return [3 /*break*/, 3];
+                    if (!(0, utils_1.isValidImage)(imageType)) {
+                        throw new Error('It\'s not image format!');
+                    }
+                    ;
+                    return [4 /*yield*/, (0, utils_1.handleCloudinary)(image, 'user')];
+                case 1:
+                    newImageUrl = _b.sent();
+                    return [4 /*yield*/, _a.saveUpdate(payload, userId, newImageUrl.secure_url, newImageUrl.public_id)];
+                case 2:
+                    userUpdate = _b.sent();
+                    return [3 /*break*/, 5];
+                case 3: return [4 /*yield*/, _a.saveUpdate(payload, userId)];
+                case 4:
+                    userUpdate = _b.sent();
+                    _b.label = 5;
+                case 5: return [2 /*return*/, userUpdate];
+                case 6:
+                    e_4 = _b.sent();
+                    if (e_4 instanceof Error) {
+                        throw new Error(e_4.message);
+                    }
+                    return [3 /*break*/, 7];
+                case 7: return [2 /*return*/];
             }
         });
     }); };

@@ -135,7 +135,7 @@ var User = /** @class */ (function () {
         });
     }); };
     User.login = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-        var payload, response, e_4, response;
+        var payload, result, response, e_4, response;
         return __generator(_a, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -145,7 +145,12 @@ var User = /** @class */ (function () {
                     _b.trys.push([1, 3, , 4]);
                     return [4 /*yield*/, user_1.default.login(payload)];
                 case 2:
-                    response = _b.sent();
+                    result = _b.sent();
+                    response = (0, utils_1.createDefaultResponse)(200, 'success', "".concat(result.username, " successfully login"), result.token);
+                    res.cookie('auth_token', "Bearer ".concat(result.token), {
+                        httpOnly: true,
+                        maxAge: 60 * 60 + 1000
+                    });
                     res.status(200).json(response);
                     return [3 /*break*/, 4];
                 case 3:
@@ -154,8 +159,11 @@ var User = /** @class */ (function () {
                         response = (0, utils_1.createDefaultResponse)(400, 'fail', e_4.message);
                         res.status(400).json(response);
                     }
+                    ;
                     return [3 /*break*/, 4];
-                case 4: return [2 /*return*/];
+                case 4:
+                    ;
+                    return [2 /*return*/];
             }
         });
     }); };
@@ -178,6 +186,37 @@ var User = /** @class */ (function () {
                     e_5 = _b.sent();
                     if (e_5 instanceof Error) {
                         response = (0, utils_1.createDefaultResponse)(400, 'fail', e_5.message);
+                        res.status(400).json(response);
+                    }
+                    return [3 /*break*/, 4];
+                case 4: return [2 /*return*/];
+            }
+        });
+    }); };
+    User.updateUserById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+        var userId, payload, image, typeImage, userUpdate, response, e_6, response;
+        var _b, _c;
+        return __generator(_a, function (_d) {
+            switch (_d.label) {
+                case 0:
+                    userId = req.params.id;
+                    payload = req.body;
+                    image = (_b = req.file) === null || _b === void 0 ? void 0 : _b.path;
+                    typeImage = (_c = req.file) === null || _c === void 0 ? void 0 : _c.mimetype;
+                    _d.label = 1;
+                case 1:
+                    _d.trys.push([1, 3, , 4]);
+                    console.log(payload.password);
+                    return [4 /*yield*/, user_1.default.updateUser(payload, userId, image, typeImage)];
+                case 2:
+                    userUpdate = _d.sent();
+                    response = (0, utils_1.createDefaultResponse)(200, 'success', 'user successfully updated', userUpdate);
+                    res.status(200).json(response);
+                    return [3 /*break*/, 4];
+                case 3:
+                    e_6 = _d.sent();
+                    if (e_6 instanceof Error) {
+                        response = (0, utils_1.createDefaultResponse)(400, 'fail', e_6.message);
                         res.status(400).json(response);
                     }
                     return [3 /*break*/, 4];

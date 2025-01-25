@@ -1,12 +1,11 @@
-import type { Request, Response  } from 'express';
-import cloudinary from '../config/cloudinary'
+import type { Response  } from 'express';
 import GtkRequest from '../models/dto/gtk'
 import Gtk from '../models/entity/gtk'
 import GtkRepository from '../repositories/gtk'
-import { handleCloudinary } from '../utils';
+import { handleCloudinary, isValidImage } from '../utils';
 
 export default class GtkService {
-  static createGtk = async (payload: GtkRequest, image: string | undefined, typeImage: any): Promise<GtkRequest | undefined> => {
+  static createGtk = async (payload: GtkRequest, image: string | undefined, imageType: any): Promise<GtkRequest | undefined> => {
     try {
       if(!payload.status || !payload.name) {
         throw new Error(`${
@@ -14,20 +13,15 @@ export default class GtkService {
           : !payload.name ? 'name'
           : null
         } is required!`)
-      }
+      };
 
-
-      if (
-        typeImage !== 'image/png' &&
-        typeImage !== 'image/jpg' &&
-        typeImage !== 'image/jpeg'
-      ) {
+      if (!isValidImage(imageType)) {
         throw new Error('It\'s not image format!')
-      }
+      };
 
       if (!image) {
         throw new Error('Image is undefined!');
-      }
+      };
 
       const imageUrl = await handleCloudinary(image, 'gtk');
 
@@ -74,15 +68,11 @@ export default class GtkService {
     }
   }
 
-  static updateGtk = async (res: Response, payload: GtkRequest, gtkId: string, image: string | undefined, typeImage: any): Promise<Gtk | undefined> => {
+  static updateGtk = async (payload: GtkRequest, gtkId: string, image: string | undefined, imageType: any): Promise<Gtk | undefined> => {
     let gtkUpdate: GtkRequest;
     try {
       if (image) {
-        if (
-          typeImage !== 'image/png' &&
-          typeImage !== 'image/jpg' &&
-          typeImage !== 'image/jpeg'
-        ) {
+        if (!isValidImage(imageType)) {
           throw new Error('It\'s not image format!')
         }
 

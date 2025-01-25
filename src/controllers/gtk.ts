@@ -5,7 +5,7 @@ import GtkRequest from '../models/dto/gtk';
 import { createDefaultResponse } from '../utils';
 
 export default class Gtk {
-  static listGtk = async (req: Request, res: Response): Promise<void> => {
+  static  listGtk = async (req: Request, res: Response): Promise<void> => {
     try {
       const gtkData = await GtkModel.find();
       const response = createDefaultResponse(200, 'success', 'data successfully retrieved', gtkData);
@@ -50,7 +50,7 @@ export default class Gtk {
     const payload: GtkRequest = req.body;
     const image: string | undefined = req.file?.path;
     const typeImage: any = req.file?.mimetype
-    try {
+    try { 
       const newGtk = await GtkService.createGtk(payload, image, typeImage);
       const response = createDefaultResponse(201, 'success', 'gtk successfully created', newGtk);
       res.status(201).json(response);
@@ -66,16 +66,16 @@ export default class Gtk {
     const payload: GtkRequest = req.body;
     const gtkId: string = req.params.id;
     const image: string | undefined = req.file?.path;
-    const typeImage: any = req.file?.mimetype;
+    const typeImage: string | undefined = req.file?.mimetype;
     try {
-      const gtkUpdate = await GtkService.updateGtk(res, payload, gtkId, image, typeImage);
+      const gtkUpdate = await GtkService.updateGtk(payload, gtkId, image, typeImage);
       const response = createDefaultResponse(200, 'success', 'gtk successfully updated', gtkUpdate);
       res.status(200).json(response);
     } catch (e) {
       if (e instanceof Error) {
         const response = createDefaultResponse(400, 'fail', e.message);
         res.status(400).json(response);
-      }
+      };
     };
   }
 }

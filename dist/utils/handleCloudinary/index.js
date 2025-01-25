@@ -41,7 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var cloudinary_1 = __importDefault(require("../../config/cloudinary"));
 var handleCloudinary = function (isImage, folderName) { return __awaiter(void 0, void 0, void 0, function () {
-    var result, importData, err_1;
+    var result, importData, e_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -57,8 +57,12 @@ var handleCloudinary = function (isImage, folderName) { return __awaiter(void 0,
                 };
                 return [2 /*return*/, importData];
             case 2:
-                err_1 = _a.sent();
-                throw new Error('failed to upload image to cloudinary!');
+                e_1 = _a.sent();
+                if (e_1 instanceof Error) {
+                    throw new Error('failed to upload image to cloudinary!');
+                }
+                ;
+                throw new Error('unknow error occured!');
             case 3: return [2 /*return*/];
         }
     });

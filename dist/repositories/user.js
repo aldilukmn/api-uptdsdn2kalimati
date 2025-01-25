@@ -99,7 +99,7 @@ var UserRepository = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         if (!mongoose_1.default.Types.ObjectId.isValid(userId)) {
-                            throw new Error("Invalid ID format: ".concat(userId));
+                            throw new Error("invalid id format: ".concat(userId));
                         }
                         ;
                         return [4 /*yield*/, user_1.default.findById(userId)];
@@ -143,6 +143,38 @@ var UserRepository = /** @class */ (function () {
                     case 4:
                         _a.sent();
                         return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ;
+    // Update User
+    UserRepository.updateUser = function (userId, data) {
+        return __awaiter(this, void 0, void 0, function () {
+            var updateUser;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!userId) {
+                            throw new Error('user id is required!');
+                        }
+                        ;
+                        if (!data) {
+                            throw new Error('no data provided for update!');
+                        }
+                        ;
+                        return [4 /*yield*/, user_1.default.findByIdAndUpdate(userId, {
+                                $set: data,
+                            }, {
+                                new: true,
+                                runValidators: true
+                            })];
+                    case 1:
+                        updateUser = _a.sent();
+                        if (!updateUser) {
+                            throw new Error("user with id ".concat(userId, " not found!"));
+                        }
+                        return [2 /*return*/, updateUser];
                 }
             });
         });

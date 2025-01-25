@@ -54,15 +54,7 @@ var UserMiddleware = /** @class */ (function () {
                 case 0:
                     _b.trys.push([0, 2, , 3]);
                     token = req.headers.authorization;
-                    if (!token) {
-                        throw new Error('please login first!');
-                    }
-                    ;
-                    if (!token.startsWith('Bearer')) {
-                        throw new Error('wrong format token!');
-                    }
-                    ;
-                    getToken = token.split(' ')[1];
+                    getToken = (0, utils_1.validateToken)(token);
                     decoded = jsonwebtoken_1.default.verify(getToken, "".concat(process.env.SECRET_KEY));
                     return [4 /*yield*/, user_1.default.getUserByUsername(decoded.user)];
                 case 1:
@@ -77,6 +69,35 @@ var UserMiddleware = /** @class */ (function () {
                     e_1 = _b.sent();
                     if (e_1 instanceof Error) {
                         response = (0, utils_1.createDefaultResponse)(401, 'fail', e_1.message);
+                        res.status(401).json(response);
+                    }
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
+            }
+        });
+    }); };
+    UserMiddleware.isAdmin = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+        var token, getToken, decoded, user, isAdmin, e_2, response;
+        return __generator(_a, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    _b.trys.push([0, 2, , 3]);
+                    token = req.headers.authorization;
+                    getToken = (0, utils_1.validateToken)(token);
+                    decoded = jsonwebtoken_1.default.verify(getToken, "".concat(process.env.SECRET_KEY));
+                    return [4 /*yield*/, user_1.default.getUserByUsername(decoded.user)];
+                case 1:
+                    user = _b.sent();
+                    isAdmin = user.role === decoded.role;
+                    if (!isAdmin) {
+                        throw new Error('it\'s not admin!');
+                    }
+                    next();
+                    return [3 /*break*/, 3];
+                case 2:
+                    e_2 = _b.sent();
+                    if (e_2 instanceof Error) {
+                        response = (0, utils_1.createDefaultResponse)(401, 'fail', e_2.message);
                         res.status(401).json(response);
                     }
                     return [3 /*break*/, 3];

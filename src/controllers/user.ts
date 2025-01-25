@@ -1,5 +1,5 @@
 import UserRequest from '../models/dto/user'
-import type {Request, Response} from 'express';
+import type { Request, Response} from 'express';
 import UserService from '../services/user';
 import UserModel from '../models/schema/user';
 import { createDefaultResponse } from '../utils';
@@ -49,17 +49,22 @@ export default class User {
   }
 
   static login = async (req: Request, res: Response): Promise<void> => {
-    const payload = req.body;
+    const payload: UserRequest = req.body;
     try {
-      const response = await UserService.login(payload);
+      const result = await UserService.login(payload);
+      const response = createDefaultResponse(200, 'success', `${result.username} successfully login`, result.token);
+      res.cookie('auth_token', `Bearer ${result.token}`, {
+        httpOnly: true,
+        maxAge: 60 * 60 + 1000
+      })
       res.status(200).json(response);
     } catch (e) {
       if (e instanceof Error) {
         const response = createDefaultResponse(400, 'fail', e.message);
         res.status(400).json(response);
-      }
-    }
-  }
+      };
+    };
+  };
 
   static deleteUserById = async (req: Request, res: Response): Promise<void> => {
     const userId: string = req.params.id;
@@ -73,5 +78,24 @@ export default class User {
         res.status(400).json(response);
       }
       }
+  };
+
+  static updateUserById = async (req: Request, res: Response): Promise<void> => {
+    const userId: string = req.params.id;
+    const payload: UserRequest = req.body;
+    const image: string | undefined = req.file?.path;
+    const typeImage: string | undefined = req.file?.mimetype;
+    try {
+      console.log(payload.password)
+      const userUpdate = await UserService.updateUser(payload, userId, image, typeImage);
+      const response = createDefaultResponse(200, 'success', 'user successfully updated', userUpdate);
+      res.status(200).json(response);
+
+    } catch (e) {
+      if (e instanceof Error) {
+        const response = createDefaultResponse(400, 'fail', e.message);
+        res.status(400).json(response);
+      }
+    }
   }
 }

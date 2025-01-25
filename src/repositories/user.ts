@@ -3,16 +3,15 @@ import User from "../models/entity/user";
 import UserModel from "../models/schema/user";
 import UserRequest from "../models/dto/user";
 import cloudinary from "../config/cloudinary";
-import { triggerAsyncId } from "async_hooks";
 
 export default class UserRepository {
   // Get User By Username
-  static async getUserByUsername(userName: string): Promise<User | null> {
+  static async getUserByUsername(userName: string): Promise<User> {
     const userData = await UserModel.findOne({
       username: userName
     }).exec();
 
-    return userData;
+    return userData as User;
   }
 
   // Get User By Email
@@ -33,7 +32,7 @@ export default class UserRepository {
   // Get User By Id
   static async getUserById (userId: string): Promise<User> {
     if (!mongoose.Types.ObjectId.isValid(userId)) {
-      throw new Error(`Invalid ID format: ${userId}`);
+      throw new Error(`invalid id format: ${userId}`);
     };
     const userData = await UserModel.findById(userId);
 
@@ -60,5 +59,31 @@ export default class UserRepository {
     };
 
     await UserModel.findByIdAndDelete(userId);
+  };
+
+  // Update User
+  static async updateUser (userId: string, data: UserRequest): Promise<User> {
+    if (!userId) {
+      throw new Error('user id is required!');
+    };
+
+    if (!data) {
+      throw new Error('no data provided for update!');
+    };
+
+    const updateUser = await UserModel.findByIdAndUpdate(
+      userId,
+      {
+        $set: data,
+      }, {
+        new: true,
+        runValidators: true
+      }
+    );
+
+    if (!updateUser) {
+      throw new Error(`user with id ${userId} not found!`);
+    }
+    return updateUser;
   }
 }

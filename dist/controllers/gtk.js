@@ -172,7 +172,7 @@ var Gtk = /** @class */ (function () {
                     _d.label = 1;
                 case 1:
                     _d.trys.push([1, 3, , 4]);
-                    return [4 /*yield*/, gtk_2.default.updateGtk(res, payload, gtkId, image, typeImage)];
+                    return [4 /*yield*/, gtk_2.default.updateGtk(payload, gtkId, image, typeImage)];
                 case 2:
                     gtkUpdate = _d.sent();
                     response = (0, utils_1.createDefaultResponse)(200, 'success', 'gtk successfully updated', gtkUpdate);
@@ -184,6 +184,7 @@ var Gtk = /** @class */ (function () {
                         response = (0, utils_1.createDefaultResponse)(400, 'fail', e_5.message);
                         res.status(400).json(response);
                     }
+                    ;
                     return [3 /*break*/, 4];
                 case 4:
                     ;
