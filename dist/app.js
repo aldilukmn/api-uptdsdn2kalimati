@@ -16,7 +16,10 @@ app.use((0, cookie_parser_1.default)());
 app.use(express_ejs_layouts_1.default);
 app.use(express_1.default.urlencoded({ extended: true })); //For Login body json, POST METHOD
 // app.use(express.json()); //For Login body json, POST METHOD
-app.use((0, cors_1.default)());
+app.use((0, cors_1.default)({
+    origin: ["".concat(process.env.LOCAL), "".concat(process.env.DEPLOY)],
+    credentials: true
+}));
 app.use('/', router_1.default);
 exports.default = app;
 //# sourceMappingURL=app.js.map
