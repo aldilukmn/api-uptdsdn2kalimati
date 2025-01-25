@@ -15,7 +15,7 @@ app.use(expressEjsLayouts);
 app.use(express.urlencoded({ extended: true })); //For Login body json, POST METHOD
 // app.use(express.json()); //For Login body json, POST METHOD
 app.use(cors({
-  origin: [`${process.env.LOCAL}`, `${process.env.DEPLOY}`],
+  origin: `${process.env.DEPLOY}`,
   credentials: true
 }));
 
