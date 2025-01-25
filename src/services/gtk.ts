@@ -1,4 +1,3 @@
-import type { Response  } from 'express';
 import GtkRequest from '../models/dto/gtk'
 import Gtk from '../models/entity/gtk'
 import GtkRepository from '../repositories/gtk'

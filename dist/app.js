@@ -16,7 +16,10 @@ app.use((0, cookie_parser_1.default)());
 app.use(express_ejs_layouts_1.default);
 app.use(express_1.default.urlencoded({ extended: true })); //For Login body json, POST METHOD
 // app.use(express.json()); //For Login body json, POST METHOD
-app.use((0, cors_1.default)());
+app.use((0, cors_1.default)({
+    origin: 'https://uptdsdn2kalimati.vercel.app', // Sesuaikan dengan origin frontend kamu
+    methods: ['GET', 'POST', 'PATCH', 'DELETE'], // Sesuaikan dengan method yang kamu perlukan
+}));
 app.use('/', router_1.default);
 exports.default = app;
 //# sourceMappingURL=app.js.map
