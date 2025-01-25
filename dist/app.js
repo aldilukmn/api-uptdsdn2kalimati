@@ -18,7 +18,7 @@ app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.urlencoded({ extended: true })); //For Login body json, POST METHOD
 // app.use(express.json()); //For Login body json, POST METHOD
 app.use((0, cors_1.default)({
-    origin: "".concat(process.env.DEPLOY),
+    origin: "https://uptdsdn2kalimati.vercel.app",
     credentials: true
 }));
 app.use('/', router_1.default);

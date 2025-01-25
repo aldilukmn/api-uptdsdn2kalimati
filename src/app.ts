@@ -15,7 +15,7 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true })); //For Login body json, POST METHOD
 // app.use(express.json()); //For Login body json, POST METHOD
 app.use(cors({
-  origin: `${process.env.DEPLOY}`,
+  origin: `https://uptdsdn2kalimati.vercel.app`,
   credentials: true
 }));
 
