@@ -1,10 +1,9 @@
-import DefaultResponse from "../utils/createDefaultResponse/type";
 import UserRequest from "../models/dto/user";
 import User from "../models/entity/user";
 import UserRepository from "../repositories/user";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken'
-import { createDefaultResponse, handleCloudinary, isValidImage } from "../utils";
+import { handleCloudinary, isValidImage } from "../utils";
 
 export default class UserService {
   static register = async (payload: UserRequest, isImage: string | undefined, imageType: any): Promise<UserRequest | undefined> => {
@@ -155,6 +154,4 @@ export default class UserService {
     await UserRepository.updateUser(userId, updateUser);
     return updateUser;
   };
-
-
 }
