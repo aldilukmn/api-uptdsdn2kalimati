@@ -11,7 +11,7 @@ var dotenv_1 = __importDefault(require("dotenv"));
 var cookie_parser_1 = __importDefault(require("cookie-parser"));
 dotenv_1.default.config();
 var app = (0, express_1.default)();
-// app.use(express.static('public'));
+app.use(express_1.default.static('public'));
 // app.set('view engine', 'ejs');
 // app.use(expressEjsLayouts);
 app.use((0, cookie_parser_1.default)());

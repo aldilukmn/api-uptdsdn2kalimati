@@ -8,7 +8,7 @@ env.config();
 
 const app = express();
 
-// app.use(express.static('public'));
+app.use(express.static('public'));
 // app.set('view engine', 'ejs');
 // app.use(expressEjsLayouts);
 app.use(cookieParser());
