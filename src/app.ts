@@ -1,10 +1,10 @@
 import express from 'express';
 import rounter from './router';
 import cors from 'cors';
-import type { Response } from 'express';
+import env from 'dotenv';
 // import expressEjsLayouts from 'express-ejs-layouts';
 import cookieParser from 'cookie-parser';
-// env.config();
+env.config();
 
 const app = express();
 
@@ -15,7 +15,7 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true })); //For Login body json, POST METHOD
 // app.use(express.json()); //For Login body json, POST METHOD
 app.use(cors({
-  origin: 'https://uptdsdn2kalimati.vercel.app',
+  origin: `${process.env.DEPLOY}`,
   credentials: true
 }));
 
