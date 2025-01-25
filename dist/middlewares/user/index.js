@@ -42,6 +42,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var utils_1 = require("../../utils");
 var user_1 = __importDefault(require("../../repositories/user"));
+var dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 var UserMiddleware = /** @class */ (function () {
     function UserMiddleware() {
     }

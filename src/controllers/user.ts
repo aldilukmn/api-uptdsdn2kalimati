@@ -86,7 +86,6 @@ export default class User {
     const image: string | undefined = req.file?.path;
     const typeImage: string | undefined = req.file?.mimetype;
     try {
-      console.log(payload.password)
       const userUpdate = await UserService.updateUser(payload, userId, image, typeImage);
       const response = createDefaultResponse(200, 'success', 'user successfully updated', userUpdate);
       res.status(200).json(response);

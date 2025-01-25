@@ -4,6 +4,8 @@ import { createDefaultResponse, validateToken } from '../../utils';
 import { DecodedType } from './types';
 import UserRepository from '../../repositories/user';
 import User from '../../models/entity/user';
+import env from 'dotenv';
+env.config();
 
 export default class UserMiddleware {
   static verifyToken = async (req: Request, res: Response, next: NextFunction): Promise<void> => {

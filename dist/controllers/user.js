@@ -206,7 +206,6 @@ var User = /** @class */ (function () {
                     _d.label = 1;
                 case 1:
                     _d.trys.push([1, 3, , 4]);
-                    console.log(payload.password);
                     return [4 /*yield*/, user_1.default.updateUser(payload, userId, image, typeImage)];
                 case 2:
                     userUpdate = _d.sent();
