@@ -55,7 +55,7 @@ var UserMiddleware = /** @class */ (function () {
             switch (_b.label) {
                 case 0:
                     _b.trys.push([0, 2, , 3]);
-                    token = req.cookies.auth_token;
+                    token = req.headers.authorization;
                     getToken = (0, utils_1.validateToken)(token);
                     decoded = jsonwebtoken_1.default.verify(getToken, "".concat(process.env.SECRET_KEY));
                     return [4 /*yield*/, user_1.default.getUserByUsername(decoded.user)];
@@ -84,7 +84,7 @@ var UserMiddleware = /** @class */ (function () {
             switch (_b.label) {
                 case 0:
                     _b.trys.push([0, 2, , 3]);
-                    token = req.cookies.auth_token;
+                    token = req.headers.authorization;
                     getToken = (0, utils_1.validateToken)(token);
                     decoded = jsonwebtoken_1.default.verify(getToken, "".concat(process.env.SECRET_KEY));
                     return [4 /*yield*/, user_1.default.getUserByUsername(decoded.user)];
