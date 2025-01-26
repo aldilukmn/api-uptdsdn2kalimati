@@ -9,8 +9,9 @@ var user_1 = __importDefault(require("../controllers/user"));
 var utils_1 = require("../utils");
 var user_2 = __importDefault(require("../middlewares/user"));
 var router = express_1.default.Router();
-var userUri = '/api/v1/user';
-var gtkUri = '/api/v1/gtk';
+var baseUrl = '/api/v1';
+var userUrl = "".concat(baseUrl, "/user");
+var gtkUrl = "".concat(baseUrl, "/gtk");
 // router.get('/', (req: Request, res: Response) => {
 //   res.render('home', {
 //     layout: 'layouts/main',
@@ -18,17 +19,17 @@ var gtkUri = '/api/v1/gtk';
 //   });
 // })
 // FOR ADMIN
-router.get("".concat(userUri, "/:id"), user_2.default.verifyToken, user_2.default.isAdmin, user_1.default.getUserById);
-router.post("".concat(userUri), user_2.default.verifyToken, user_2.default.isAdmin, utils_1.handleImage, user_1.default.register);
-router.get("".concat(userUri), user_2.default.verifyToken, user_2.default.isAdmin, user_1.default.listUser);
-router.delete("".concat(userUri, "/:id"), user_2.default.verifyToken, user_2.default.isAdmin, user_1.default.deleteUserById);
-router.post("".concat(userUri, "/login"), user_1.default.login);
-router.patch("".concat(userUri, "/:id"), user_2.default.verifyToken, user_2.default.isAdmin, utils_1.handleImage, user_1.default.updateUserById);
+router.get("".concat(userUrl, "/:id"), user_2.default.verifyToken, user_2.default.isAdmin, user_1.default.getUserById);
+router.post("".concat(userUrl), user_2.default.verifyToken, user_2.default.isAdmin, utils_1.handleImage, user_1.default.register);
+router.get("".concat(userUrl), user_2.default.verifyToken, user_2.default.isAdmin, user_1.default.listUser);
+router.delete("".concat(userUrl, "/:id"), user_2.default.verifyToken, user_2.default.isAdmin, user_1.default.deleteUserById);
+router.post("".concat(baseUrl, "/login"), user_1.default.login);
+router.patch("".concat(userUrl, "/:id"), user_2.default.verifyToken, user_2.default.isAdmin, utils_1.handleImage, user_1.default.updateUserById);
 // GET GTK DATA
-router.get("".concat(gtkUri), gtk_1.default.listGtk);
-router.get("".concat(gtkUri, "/:id"), gtk_1.default.getGtkById);
-router.post("".concat(gtkUri), utils_1.handleImage, gtk_1.default.createGtk);
-router.patch("".concat(gtkUri, "/:id"), utils_1.handleImage, gtk_1.default.updateGtk);
-router.delete("".concat(gtkUri, "/:id"), gtk_1.default.deleteGtkById);
+router.get("".concat(gtkUrl), gtk_1.default.listGtk);
+router.get("".concat(gtkUrl, "/:id"), gtk_1.default.getGtkById);
+router.post("".concat(gtkUrl), utils_1.handleImage, gtk_1.default.createGtk);
+router.patch("".concat(gtkUrl, "/:id"), utils_1.handleImage, gtk_1.default.updateGtk);
+router.delete("".concat(gtkUrl, "/:id"), gtk_1.default.deleteGtkById);
 exports.default = router;
 //# sourceMappingURL=index.js.map
