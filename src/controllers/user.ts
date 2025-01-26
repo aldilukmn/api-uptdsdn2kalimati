@@ -55,7 +55,8 @@ export default class User {
       const response = createDefaultResponse(200, 'success', `${result.username} successfully login`, result.token);
       res.cookie('auth_token', `Bearer ${result.token}`, {
         httpOnly: true,
-        maxAge: 60 * 60 + 1000
+        maxAge: 60 * 60 + 1000,
+        secure: true
       });
       res.status(200).json(response);
     } catch (e) {
