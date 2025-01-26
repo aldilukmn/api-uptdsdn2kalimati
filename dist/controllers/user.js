@@ -148,7 +148,7 @@ var User = /** @class */ (function () {
                     result = _b.sent();
                     response = (0, utils_1.createDefaultResponse)(200, 'success', "".concat(result.username, " successfully login"), result.token);
                     res.cookie('auth_token', "Bearer ".concat(result.token), {
-                        httpOnly: true,
+                        // httpOnly: true,
                         maxAge: 60 * 60 + 1000
                     });
                     res.status(200).json(response);
