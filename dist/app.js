@@ -18,6 +18,7 @@ app.use(express_1.default.urlencoded({ extended: true })); //For Login body json
 app.use((0, cors_1.default)({
     origin: ['https://uptdsdn2kalimati.vercel.app', 'http://localhost:5173'], // Sesuaikan dengan origin frontend kamu
     methods: ['GET', 'POST', 'PATCH', 'DELETE'], // Sesuaikan dengan method yang kamu perlukan
+    credentials: true
 }));
 app.use('/', router_1.default);
 exports.default = app;
