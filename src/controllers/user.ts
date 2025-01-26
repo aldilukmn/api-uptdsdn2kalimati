@@ -54,7 +54,7 @@ export default class User {
       const result = await UserService.login(payload);
       const response = createDefaultResponse(200, 'success', `${result.username} successfully login`, result.token);
       res.cookie('auth_token', `Bearer ${result.token}`, {
-        // httpOnly: true,
+        httpOnly: true,
         maxAge: 60 * 60 + 1000
       });
       res.status(200).json(response);
