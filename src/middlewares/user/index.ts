@@ -10,7 +10,7 @@ env.config();
 export default class UserMiddleware {
   static verifyToken = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const token: string | undefined = req.headers.authorization;
+      const token: string = req.cookies.auth_token;
 
       const getToken = validateToken(token);
 
@@ -35,7 +35,7 @@ export default class UserMiddleware {
 
   static isAdmin = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const token: string | undefined = req.headers.authorization;
+      const token: string = req.cookies.auth_token;
 
       const getToken = validateToken(token);
       

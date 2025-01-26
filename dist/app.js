@@ -8,7 +8,6 @@ var router_1 = __importDefault(require("./router"));
 var cors_1 = __importDefault(require("cors"));
 var express_ejs_layouts_1 = __importDefault(require("express-ejs-layouts"));
 var cookie_parser_1 = __importDefault(require("cookie-parser"));
-// env.config();
 var app = (0, express_1.default)();
 app.use(express_1.default.static('public'));
 app.set('view engine', 'ejs');
@@ -17,7 +16,7 @@ app.use(express_ejs_layouts_1.default);
 app.use(express_1.default.urlencoded({ extended: true })); //For Login body json, POST METHOD
 // app.use(express.json()); //For Login body json, POST METHOD
 app.use((0, cors_1.default)({
-    origin: ['https://uptdsdn2kalimati.vercel.app', 'http://localhost:5173'], // Sesuaikan dengan origin frontend kamu
+    origin: ["".concat(process.env.LOCAL), "".concat(process.env.DEPLOY)], // Sesuaikan dengan origin frontend kamu
     methods: ['GET', 'POST', 'PATCH', 'DELETE'], // Sesuaikan dengan method yang kamu perlukan
 }));
 app.use('/', router_1.default);

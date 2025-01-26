@@ -56,7 +56,7 @@ export default class User {
       res.cookie('auth_token', `Bearer ${result.token}`, {
         httpOnly: true,
         maxAge: 60 * 60 + 1000
-      })
+      });
       res.status(200).json(response);
     } catch (e) {
       if (e instanceof Error) {
