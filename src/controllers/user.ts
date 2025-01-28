@@ -67,6 +67,18 @@ export default class User {
     };
   };
 
+  static logout = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const response = createDefaultResponse(200, 'success', 'user successfully logout');
+      res.status(200).json(response);
+    } catch (e) {
+      if (e instanceof Error) {
+        const response = createDefaultResponse(400, 'fail', e.message);
+        res.status(400).json(response);
+      }
+    }
+  }
+
   static deleteUserById = async (req: Request, res: Response): Promise<void> => {
     const userId: string = req.params.id;
     try {

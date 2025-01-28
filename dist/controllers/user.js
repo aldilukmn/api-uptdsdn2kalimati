@@ -168,6 +168,22 @@ var User = /** @class */ (function () {
             }
         });
     }); };
+    User.logout = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+        var response, response;
+        return __generator(_a, function (_b) {
+            try {
+                response = (0, utils_1.createDefaultResponse)(200, 'success', 'user successfully logout');
+                res.status(200).json(response);
+            }
+            catch (e) {
+                if (e instanceof Error) {
+                    response = (0, utils_1.createDefaultResponse)(400, 'fail', e.message);
+                    res.status(400).json(response);
+                }
+            }
+            return [2 /*return*/];
+        });
+    }); };
     User.deleteUserById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
         var userId, response, e_5, response;
         return __generator(_a, function (_b) {
