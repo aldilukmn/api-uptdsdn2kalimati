@@ -24,6 +24,7 @@ router.post("".concat(userUrl), user_2.default.verifyToken, user_2.default.isAdm
 router.get("".concat(userUrl), user_2.default.verifyToken, user_2.default.isAdmin, user_1.default.listUser);
 router.delete("".concat(userUrl, "/:id"), user_2.default.verifyToken, user_2.default.isAdmin, user_1.default.deleteUserById);
 router.post("".concat(baseUrl, "/login"), user_1.default.login);
+router.delete("".concat(baseUrl, "/logout"), user_2.default.verifyToken, user_1.default.logout);
 router.patch("".concat(userUrl, "/:id"), user_2.default.verifyToken, user_2.default.isAdmin, utils_1.handleImage, user_1.default.updateUserById);
 // GET GTK DATA
 router.get("".concat(gtkUrl), gtk_1.default.listGtk);
