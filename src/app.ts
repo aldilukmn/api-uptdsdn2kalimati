@@ -15,7 +15,7 @@ app.use(cors({
   origin: ['https://uptdsdn2kalimati.vercel.app', 'http://localhost:5173', 'http://localhost:3000'], // Sesuaikan dengan origin frontend kamu
   methods: ['GET', 'POST', 'PATCH', 'DELETE'], // Sesuaikan dengan method yang kamu perlukan
   credentials: true,
-  allowedHeaders: ['Content-Type']
+  preflightContinue: true
 }));
 
 app.use('/', rounter);
