@@ -47,7 +47,7 @@ export default class User {
       };
     };
   }
-
+p
   static login = async (req: Request, res: Response): Promise<void> => {
     const payload: UserRequest = req.body;
     try {

@@ -3,6 +3,7 @@ import Gtk from '../controllers/gtk';
 import User from '../controllers/user';
 import { handleImage } from '../utils';
 import UserMiddleware from '../middlewares/user';
+import cors from 'cors';
 
 const router = express.Router();
 const baseUrl = '/api/v1';
@@ -26,7 +27,7 @@ router.delete(`${baseUrl}/logout`, UserMiddleware.verifyToken, User.logout);
 router.patch(`${userUrl}/:id`, UserMiddleware.verifyToken, UserMiddleware.isAdmin, handleImage, User.updateUserById);
 
 // GET GTK DATA
-router.get(`${gtkUrl}`, Gtk.listGtk);
+router.get(`${gtkUrl}`, cors(), Gtk.listGtk);
 router.get(`${gtkUrl}/:id`, Gtk.getGtkById);
 router.post(`${gtkUrl}`, handleImage, Gtk.createGtk);
 router.patch(`${gtkUrl}/:id`, handleImage, Gtk.updateGtk);
